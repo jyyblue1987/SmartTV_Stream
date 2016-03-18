@@ -16,6 +16,7 @@ import common.design.layout.ScreenAdapter;
 import common.library.utils.DataUtils;
 import common.library.utils.MessageUtils;
 import common.network.utils.NetworkUtils;
+import io.vov.vitamio.Vitamio;
 
 
 public class LiveChannelApplication extends Application {
@@ -24,6 +25,7 @@ public class LiveChannelApplication extends Application {
 	    public void onCreate() {
 	        super.onCreate();
 	        
+	        Vitamio.isInitialized(this);
 	        initScreenAdapter();
 	        setContextToComponents();
 	        initImageLoader(this);

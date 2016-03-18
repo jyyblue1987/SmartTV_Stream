@@ -20,12 +20,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import common.image.load.ImageUtils;
-import common.library.utils.DataUtils;
 import common.library.utils.MessageUtils;
 import common.library.utils.MyTime;
 import common.list.adapter.ItemCallBack;
 import common.list.adapter.MyListAdapter;
 import common.list.adapter.ViewHolder;
+import common.manager.activity.ActivityManager;
 import common.network.utils.LogicResult;
 import common.network.utils.ResultCallBack;
 
@@ -79,7 +79,9 @@ public class ChannelListActivity extends BaseActivity {
 	
 	private void gotoChannelListPage(int pos)
 	{
-		
+		Bundle bundle = new Bundle();
+		bundle.putString(INTENT_EXTRA, m_adapterList.getItem(pos).optString("channel_url", "0"));
+		ActivityManager.changeActivity(this, VideoViewDemo.class, bundle, false, null );
 	}
 	
 	private void getChannelList(String category_id)

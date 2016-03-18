@@ -42,11 +42,11 @@ public class LoginActivity extends BaseActivity {
 		
 		m_editDeviceID.setText("2507496078");
 	
-		String userid = DataUtils.getPreference(Const.USER_ID, "");
-		if( CheckUtils.isEmpty(userid) )
-			return;
-		
-		gotoCategoryListPage();
+//		String userid = DataUtils.getPreference(Const.USER_ID, "");
+//		if( CheckUtils.isEmpty(userid) )
+//			return;
+//		
+//		gotoCategoryListPage();
 	}
 	
 	protected void initEvents()
@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity {
 			 MessageUtils.showMessageDialog(this, "Please input device ID");
 			 return;
 		 }
-		
+		 
 		 login(device_id);
 	 }
 
@@ -90,7 +90,13 @@ public class LoginActivity extends BaseActivity {
 				JSONObject data = result.getData();
 				if( data == null || data.has("user_id") == false )
 				{
-					MessageUtils.showMessageDialog(LoginActivity.this, data.optString("message", ""));
+					 String userid = DataUtils.getPreference(Const.USER_ID, "");
+					 if( CheckUtils.isEmpty(userid) == false )
+					 {
+						 gotoCategoryListPage();
+						 return;
+					 }
+					 MessageUtils.showMessageDialog(LoginActivity.this, data.optString("message", ""));
 					return;
 				}		
 				
