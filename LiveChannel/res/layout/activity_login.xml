@@ -23,6 +23,7 @@
 	        android:layout_width="150dip"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="10dip"
+	        android:maxLength="10"
 	        android:singleLine="true"
 	        android:inputType="number"
 	        />

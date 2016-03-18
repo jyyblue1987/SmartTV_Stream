@@ -11,6 +11,7 @@ import android.widget.EditText;
 import common.library.utils.CheckUtils;
 import common.library.utils.DataUtils;
 import common.library.utils.MessageUtils;
+import common.manager.activity.ActivityManager;
 import common.network.utils.LogicResult;
 import common.network.utils.ResultCallBack;
 
@@ -101,7 +102,8 @@ public class LoginActivity extends BaseActivity {
 	 
 	 private void gotoCategoryListPage()
 	 {
-		 
+		Bundle bundle = new Bundle();
+		ActivityManager.changeActivity(this, CategoryListActivity.class, bundle, true, null );
 	 }
 	 
 	 
