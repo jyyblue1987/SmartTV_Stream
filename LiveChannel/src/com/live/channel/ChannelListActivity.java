@@ -26,11 +26,10 @@ import common.library.utils.MyTime;
 import common.list.adapter.ItemCallBack;
 import common.list.adapter.MyListAdapter;
 import common.list.adapter.ViewHolder;
-import common.manager.activity.ActivityManager;
 import common.network.utils.LogicResult;
 import common.network.utils.ResultCallBack;
 
-public class CategoryListActivity extends BaseActivity {
+public class ChannelListActivity extends BaseActivity {
 	ListView			m_listItems = null;
 	MyListAdapter		m_adapterList = null;
 	
@@ -53,7 +52,15 @@ public class CategoryListActivity extends BaseActivity {
 	{
 		super.initData();
 		
-		getCategoryList();
+		Bundle bundle = getIntent().getExtras();
+		
+		if( bundle != null )
+		{
+			String category_id = bundle.getString(INTENT_EXTRA, "");
+			getChannelList(category_id);
+		}
+		
+		
 	}
 	
 	protected void initEvents()
@@ -72,37 +79,33 @@ public class CategoryListActivity extends BaseActivity {
 	
 	private void gotoChannelListPage(int pos)
 	{
-		Bundle bundle = new Bundle();
-		bundle.putString(INTENT_EXTRA, m_adapterList.getItem(pos).optString(Const.CATEGORY_ID, "0"));
-		ActivityManager.changeActivity(this, ChannelListActivity.class, bundle, false, null );
+		
 	}
 	
-	private void getCategoryList()
+	private void getChannelList(String category_id)
 	{
 		showLoadingProgress();
 		
-		String userid = DataUtils.getPreference(Const.USER_ID, "");
-		ServerManager.getCategoryList(userid, new ResultCallBack() {
+		ServerManager.getChannelList(category_id, new ResultCallBack() {
 			
 			@Override
 			public void doAction(LogicResult result) {
 				hideProgress();
 				
 				JSONObject data = result.getData();
-				if( data == null || data.has("category_list") == false )
+				if( data == null || data.has("channels_list") == false )
 				{
-					MessageUtils.showMessageDialog(CategoryListActivity.this, "There is no category list");
+					MessageUtils.showMessageDialog(ChannelListActivity.this, "There is no channel list");
 					return;
 				}		
 				
-				JSONArray array = data.optJSONArray("category_list");
-				showCategoryList(array);
-								
+				JSONArray array = data.optJSONArray("channels_list");
+				showChannelList(array);								
 			}
 		});
 	}
 	
-	private void showCategoryList(JSONArray array)
+	private void showChannelList(JSONArray array)
 	{
 		List<JSONObject> list = new ArrayList<JSONObject>();
 		String now = MyTime.getCurrentDate();
@@ -119,13 +122,13 @@ public class CategoryListActivity extends BaseActivity {
 		}
 		
 		
-		m_adapterList = new CategoryListAdapter(this, list, R.layout.fragment_category_list_item, null);
+		m_adapterList = new ChannelListAdapter(this, list, R.layout.fragment_category_list_item, null);
 		
 		m_listItems.setAdapter(m_adapterList);
 	}
 	
-	class CategoryListAdapter extends MyListAdapter {
-		public CategoryListAdapter(Context context, List<JSONObject> data,
+	class ChannelListAdapter extends MyListAdapter {
+		public ChannelListAdapter(Context context, List<JSONObject> data,
 			int resource, ItemCallBack callback) {
 			super(context, data, resource, callback);
 		}
@@ -135,9 +138,9 @@ public class CategoryListActivity extends BaseActivity {
 			final JSONObject item = getItem(position);
 			
 			DisplayImageOptions options = ImageUtils.buildUILOption(R.drawable.ic_launcher).build();
-			ImageLoader.getInstance().displayImage(ServerTask.SERVER_UPLOAD_PHOTO_PATH + item.optString("category_image", ""), (ImageView)ViewHolder.get(rowView, R.id.img_thumbnail), options);
+			ImageLoader.getInstance().displayImage(ServerTask.SERVER_UPLOAD_PHOTO_PATH + item.optString("channel_thumbnail", ""), (ImageView)ViewHolder.get(rowView, R.id.img_thumbnail), options);
 
-			((TextView)ViewHolder.get(rowView, R.id.txt_name)).setText(item.optString("category_name", ""));
+			((TextView)ViewHolder.get(rowView, R.id.txt_name)).setText(item.optString("channel_title", ""));
 			
 		}	
 	}

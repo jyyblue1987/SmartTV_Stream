@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CategoryListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ChannelListActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
