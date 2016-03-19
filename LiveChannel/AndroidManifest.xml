@@ -30,7 +30,8 @@
         </activity>
         <activity android:name=".CategoryListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ChannelListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".VideoViewDemo" android:screenOrientation="portrait"/>
+        <activity android:name=".VideoViewDemo" android:screenOrientation="landscape"/>
+        <activity android:name=".VideoViewIJK" />
     </application>
 
 </manifest>

@@ -81,7 +81,8 @@ public class ChannelListActivity extends BaseActivity {
 	{
 		Bundle bundle = new Bundle();
 		bundle.putString(INTENT_EXTRA, m_adapterList.getItem(pos).optString("channel_url", "0"));
-		ActivityManager.changeActivity(this, VideoViewDemo.class, bundle, false, null );
+//		ActivityManager.changeActivity(this, VideoViewDemo.class, bundle, false, null );
+		ActivityManager.changeActivity(this, VideoViewIJK.class, bundle, false, null );
 	}
 	
 	private void getChannelList(String category_id)
